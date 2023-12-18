@@ -1,18 +1,21 @@
 const { Schema } = require('../connect');
 
 const characterSchema = new Schema({
-    name:{
-        type:String,
-        require:true,
+    name: {
+        type: String,
+        require: true,
     },
-    birth:{
-        type:Number,
+    birth: {
+        type: Number,
     },
-    death:{
-        type:Number,
+    death: {
+        type: Number,
     },
-    country:String,
-
+    country: {
+        type: String
+    }
 })
+
+
 
 module.exports = characterSchema
