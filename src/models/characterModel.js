@@ -1,4 +1,6 @@
-const { model } = require('../connect');
+
+
+const { model } = require('../db/connect');
 const characterSchema = require('../schemas/characterSchema');
 
 const characterModel = model('sanguocharacter', characterSchema, 'sanguocharacter');
@@ -14,6 +16,7 @@ class CharacterModel {
     }
     // 通过姓名数组获取大量角色
     getCharacter(arr) {
+        console.log('arr:',arr);
         let res = []
         if (arr.length) {
             let params = {

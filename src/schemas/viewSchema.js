@@ -1,5 +1,6 @@
-const { Schema } = require('../connect');
 
+
+const { Schema } = require('../db/connect.js');
 const viewSchema = new Schema({
     name:{
         type:String,

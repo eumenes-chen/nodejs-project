@@ -1,4 +1,6 @@
-const { model } = require('../connect');
+
+
+const { model } = require('../db/connect');
 const viewSchema = require('../schemas/viewSchema');
 
 const viewModel = model('view',viewSchema,'viewlist');
@@ -8,10 +10,12 @@ class ViewModel{
         this.db = viewModel;
     }
     getView(data={}){
+        console.log('data:',data);
         return this.db.find(data)
     }
     addView(data){
-        return this.db.insertMany(data)
+        let res =  this.db.insertMany(data)
+        return res;
     }
     deleteView(data){
         return this.db.deleteOne({name:data.name})
