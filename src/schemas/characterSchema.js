@@ -14,6 +14,9 @@ const characterSchema = new Schema({
     },
     country: {
         type: String
+    },
+    view: {
+        type: Boolean
     }
 })
 
