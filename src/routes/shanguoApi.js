@@ -20,7 +20,11 @@ router.get('/', function (req, res, next) {
 
 //获取角色数据
 router.get('/character', async (req, res) => {
-  let data = await CharacterModel.character();
+  let query = req.query
+  console.log('获取',query);
+  let list = await CharacterModel.character(query);
+  let total = await CharacterModel.totalCharacter()
+  let data = {list,total}
   res.send(dataHandler(data))
 })
 //通过姓名数组获取大量角色

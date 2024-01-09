@@ -1,5 +1,6 @@
 const { model } = require("../db/connect");
 const characterSchema = require("../schemas/characterSchema");
+const qs = require('qs')
 
 const characterModel = model(
   "sanguocharacter",
@@ -11,10 +12,18 @@ class CharacterModel {
   constructor(db) {
     this.db = characterModel;
   }
-  //获取角色数据
-  character() {
-    let res = this.db.find({});
-    return res;
+  //根据页数获取角色数据
+  // {page,pageSize}
+  character(data) {
+    let curPage = data.curPage || 1;
+    let pageSize = data.pageSize || 100;
+    let list = this.db.find().skip((curPage-1) * pageSize).limit(pageSize);
+    return list;
+  }
+  // 获取角色数据总量
+  totalCharacter(){
+    let total = this.db.find().count();
+    return total;
   }
   // 通过姓名数组获取大量角色
   getCharacter(arr) {
@@ -43,7 +52,7 @@ class CharacterModel {
   }
   // 编辑角色
   editCharacter(data) {
-    console.log('data:',data);
+    console.log("data:", data);
     let id = {};
     let info = {};
     for (let prop in data) {
