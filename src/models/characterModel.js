@@ -1,6 +1,6 @@
 const { model } = require("../db/connect");
 const characterSchema = require("../schemas/characterSchema");
-const qs = require('qs')
+const qs = require("qs");
 
 const characterModel = model(
   "sanguocharacter",
@@ -16,33 +16,40 @@ class CharacterModel {
   // {page,pageSize}
   character(data) {
     let curPage = data.curPage || 1;
-    let pageSize = data.pageSize || 100;
-    let list = this.db.find().skip((curPage-1) * pageSize).limit(pageSize);
+    let pageSize = data.pageSize || 1000;
+    let list = this.db
+      .find()
+      .skip((curPage - 1) * pageSize)
+      .limit(pageSize);
     return list;
   }
   // 获取角色数据总量
-  totalCharacter(){
-    let total = this.db.find().count();
-    return total;
-  }
-  // 通过姓名数组获取大量角色
-  getCharacter(arr) {
-    console.log("arr:", arr);
-    let res = [];
-    if (arr.length) {
-      let params = {
-        $or: arr,
-      };
-      res = this.db.find(params);
+  totalCharacter(str) {
+    let res = "";
+    if (str) {
+      let params = [
+        { name: { $regex: eval("/" + str + "/") } },
+        { birth: { $regex: eval("/" + str + "/") } },
+        { death: { $regex: eval("/" + str + "/") } },
+        { country: { $regex: eval("/" + str + "/") } },
+      ];
+      res = this.db.find({ $or: params }).count();
+    } else {
+      res = this.db.find().count();
     }
+
     return res;
   }
-  // 根据关键词查询角色
+  // 根据姓名查询角色
   searchCharacter(str) {
-    let params = {
-      name: eval("/" + str + "/i"),
-    };
-    let res = this.db.find(params);
+    console.log("str:", str);
+    let params = [
+      { name: { $regex: eval("/" + str + "/") } },
+      { birth: { $regex: eval("/" + str + "/") } },
+      { death: { $regex: eval("/" + str + "/") } },
+      { country: { $regex: eval("/" + str + "/") } },
+    ];
+    let res = this.db.find({ $or: params });
     return res;
   }
   // 添加角色

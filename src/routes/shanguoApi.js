@@ -34,9 +34,11 @@ router.post('/getcharacter', async (req, res) => {
   res.send(dataHandler(data))
 })
 // 根据关键词查询角色
-router.post('/searchCharacter', async (req, res) => {
+router.post('/searchcharacter', async (req, res) => {
   let params = req.body.str
-  let data = await CharacterModel.searchCharacter(params);
+  let list = await CharacterModel.searchCharacter(params);
+  let total = await CharacterModel.totalCharacter(params)
+  let data = {list,total}
   res.send(dataHandler(data))
 })
 //添加角色
@@ -69,29 +71,6 @@ router.post('/clearviewcharacter',async (req,res) => {
   let data = await CharacterModel.clearViewCharacter();
   res.send(dataHandler(data))
 })
-
-
-
-// //获取name数据
-// router.get('/view', async (req, res) => {
-//   let data = await ViewModel.getView();
-//   res.send(dataHandler(data))
-// })
-// //添加name
-// router.post('/addview', async (req, res) => {
-//   let data = await ViewModel.addView(req.body);
-//   res.send(dataHandler(data))
-// })
-// //删除name
-// router.post('/deleteview', async (req, res) => {
-//   let data = await ViewModel.deleteView(req.body);
-//   res.send(dataHandler(data))
-// })
-// //删除全部name
-// router.post('/deleteallview', async (req, res) => {
-//   let data = await ViewModel.deleteAllView();
-//   res.send(dataHandler(data))
-// })
 
 
 module.exports = router;

@@ -7,6 +7,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./src/routes/index');
 var sanguoRouter = require('./src/routes/shanguoApi');
+var dateRouter = require('./src/routes/dateApi');
 
 var app = express();
 
@@ -24,6 +25,7 @@ app.use(cors())
 
 app.use('/', indexRouter);
 app.use('/api', sanguoRouter);
+app.use('/api', dateRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
