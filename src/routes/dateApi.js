@@ -50,7 +50,7 @@ router.get("/getdate", async (req, res) => {
       list = await DateModel.getDate(query);
     }
   } else if (query.curPage) {
-    list = await DateModel.getDateByPage(query);
+    list = await DateModel.searchDate(query);
     total = await DateModel.totalDate();
   }
   let data = { list, total };
@@ -69,7 +69,7 @@ router.post("/deletedate", async (req, res) => {
 });
 // 根据关键词查询日期
 router.post("/searchdate", async (req, res) => {
-  let params = req.body.str;
+  let params = req.body.value;
   let list = await DateModel.searchDate(params);
   let total = await DateModel.totalDate(params);
   let data = { list, total };

@@ -23,8 +23,7 @@ router.get('/character', async (req, res) => {
   let query = req.query
   console.log('获取',query);
   let list = await CharacterModel.character(query);
-  let total = await CharacterModel.totalCharacter()
-  let data = {list,total}
+  let data = {list}
   res.send(dataHandler(data))
 })
 //通过姓名数组获取大量角色
@@ -35,7 +34,7 @@ router.post('/getcharacter', async (req, res) => {
 })
 // 根据关键词查询角色
 router.post('/searchcharacter', async (req, res) => {
-  let params = req.body.str
+  let params = req.body
   let list = await CharacterModel.searchCharacter(params);
   let total = await CharacterModel.totalCharacter(params)
   let data = {list,total}
