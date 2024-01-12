@@ -69,18 +69,18 @@ class DateModel {
     return res;
   }
   editDate(data) {
-    let id = {};
+    let date = {};
     let info = {};
     let timeStamp = dayjs().valueOf();
     for (let prop in data) {
-      if (prop === "_id") {
-        id = { _id: data[prop] };
+      if (prop === "date") {
+        date = { date: data[prop] };
       } else {
         info[prop] = data[prop];
       }
     }
     info = { ...info, et: timeStamp };
-    return this.db.updateMany(id, { $set: info });
+    return this.db.updateMany(date, { $set: info });
   }
   deleteDate(data) {
     return this.db.deleteOne({ date: data.date });
